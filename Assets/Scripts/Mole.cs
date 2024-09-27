@@ -9,6 +9,9 @@ public class Mole : MonoBehaviour
     [SerializeField] private Sprite moleHatBroken;
     [SerializeField] private Sprite moleHit;
     [SerializeField] private Sprite moleHatHit;
+    [SerializeField] private Sprite person1;
+    [SerializeField] private Sprite person2;
+    [SerializeField] private Sprite person3;
 
     [Header("GameManager")]
     [SerializeField] private GameManager gameManager;
@@ -30,10 +33,11 @@ public class Mole : MonoBehaviour
 
     // Mole Parameters 
     private bool hittable = true;
-    public enum MoleType { Standard, HardHat, Bomb };
+    public enum MoleType { Standard, HardHat, Bomb, Person };
     private MoleType moleType;
     private float hardRate = 0.25f;
     private float bombRate = 0f;
+    private int personRate = 0;
     private int lives;
     private int moleIndex = 0;
 
@@ -144,6 +148,14 @@ public class Mole : MonoBehaviour
                     // Game over, 1 for bomb.
                     gameManager.GameOver(1);
                     break;
+                case MoleType.Person:
+                    gameManager.AddScore(moleIndex);
+                    // Stop the animation
+                    StopAllCoroutines();
+                    StartCoroutine(QuickHide());
+                    // Turn off hittable so that we can't keep tapping for score.
+                    hittable = false;
+                    break;
                 default:
                     break;
             }
@@ -179,6 +191,7 @@ public class Mole : MonoBehaviour
                 lives = 1;
             }
         }
+
         // Mark as hittable so we can register an onclick event.
         hittable = true;
     }
@@ -191,7 +204,7 @@ public class Mole : MonoBehaviour
 
         // Increase the amounts of HardHats until 100% at level 40.
         hardRate = Mathf.Min(level * 0.025f, 1f);
-
+        
         // Duration bounds get quicker as we progress. No cap on insanity.
         float durationMin = Mathf.Clamp(1 - level * 0.1f, 0.01f, 1f);
         float durationMax = Mathf.Clamp(2 - level * 0.1f, 0.01f, 2f);

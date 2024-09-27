@@ -1,3 +1,4 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject bombText;
     [SerializeField] private TMPro.TextMeshProUGUI timeText;
     [SerializeField] private TMPro.TextMeshProUGUI scoreText;
+    [SerializeField] private GameObject background;
 
     // Hardcoded variables you may want to tune.
     private float startingTime = 30f;
@@ -30,6 +32,7 @@ public class GameManager : MonoBehaviour
         outOfTimeText.SetActive(false);
         bombText.SetActive(false);
         gameUI.SetActive(true);
+        background.SetActive(false);
         // Hide all the visible moles.
         for (int i = 0; i < moles.Count; i++)
         {
