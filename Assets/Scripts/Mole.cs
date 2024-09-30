@@ -37,7 +37,7 @@ public class Mole : MonoBehaviour
     private MoleType moleType;
     private float hardRate = 0.25f;
     private float bombRate = 0f;
-    private int personRate = 0;
+    private float personRate = 0.5f;
     private int lives;
     private int moleIndex = 0;
 
@@ -146,7 +146,7 @@ public class Mole : MonoBehaviour
                     break;
                 case MoleType.Bomb:
                     // Game over, 1 for bomb.
-                    gameManager.GameOver(1);
+                    //gameManager.GameOver(1);
                     break;
                 case MoleType.Person:
                     gameManager.AddScore(moleIndex);
@@ -165,6 +165,7 @@ public class Mole : MonoBehaviour
     private void CreateNext()
     {
         float random = Random.Range(0f, 1f);
+        int randomP = Random.Range(0, 2);
         if (random < bombRate)
         {
             // Make a bomb.
@@ -185,11 +186,37 @@ public class Mole : MonoBehaviour
             }
             else
             {
-                // Create a standard one.
-                moleType = MoleType.Standard;
-                spriteRenderer.sprite = mole;
-                lives = 1;
+                random = Random.Range(0f, 1f);
+                if (random < personRate)
+                {
+                    moleType = MoleType.Person;
+                    randomP = Random.Range(0, 2);
+                    if (randomP == 0)
+                    {
+                        spriteRenderer.sprite = person1;
+                    }
+                    else if (randomP == 1)
+                    {
+                        spriteRenderer.sprite = person2;
+                    }
+                    else if (randomP == 2)
+                    {
+                        spriteRenderer.sprite = person3;
+                    }
+                    lives = 1;
+
+                }
+                else
+                {
+                    // Create a standard one.
+                    moleType = MoleType.Standard;
+                    spriteRenderer.sprite = mole;
+                    lives = 1;
+                }
+               
             }
+            
+
         }
 
         // Mark as hittable so we can register an onclick event.
@@ -204,7 +231,8 @@ public class Mole : MonoBehaviour
 
         // Increase the amounts of HardHats until 100% at level 40.
         hardRate = Mathf.Min(level * 0.025f, 1f);
-        
+
+        personRate = Mathf.Min(level * 0.025f, 0.75f);
         // Duration bounds get quicker as we progress. No cap on insanity.
         float durationMin = Mathf.Clamp(1 - level * 0.1f, 0.01f, 1f);
         float durationMax = Mathf.Clamp(2 - level * 0.1f, 0.01f, 2f);

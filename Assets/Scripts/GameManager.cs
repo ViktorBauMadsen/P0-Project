@@ -14,7 +14,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI timeText;
     [SerializeField] private TMPro.TextMeshProUGUI scoreText;
     [SerializeField] private GameObject background;
-
+    public GameObject Info1;
+    public GameObject Info2;
+    public GameObject Info3;
     // Hardcoded variables you may want to tune.
     private float startingTime = 30f;
 
@@ -33,6 +35,9 @@ public class GameManager : MonoBehaviour
         bombText.SetActive(false);
         gameUI.SetActive(true);
         background.SetActive(false);
+        Info1.SetActive(false);
+        Info2.SetActive(false);
+        Info3.SetActive(false);
         // Hide all the visible moles.
         for (int i = 0; i < moles.Count; i++)
         {
@@ -48,7 +53,7 @@ public class GameManager : MonoBehaviour
         playing = true;
     }
 
-    public void GameOver(int type)
+  /*  public void GameOver(int type)
     {
         // Show the message.
         if (type == 0)
@@ -67,7 +72,7 @@ public class GameManager : MonoBehaviour
         // Stop the game and show the start UI.
         playing = false;
         playButton.SetActive(true);
-    }
+    }*/
 
     // Update is called once per frame
     void Update()
@@ -79,7 +84,7 @@ public class GameManager : MonoBehaviour
             if (timeRemaining <= 0)
             {
                 timeRemaining = 0;
-                GameOver(0);
+               // GameOver(0);
             }
             timeText.text = $"{(int)timeRemaining / 60}:{(int)timeRemaining % 60:D2}";
             // Check if we need to start any more moles.
@@ -117,5 +122,9 @@ public class GameManager : MonoBehaviour
         }
         // Remove from active moles.
         currentMoles.Remove(moles[moleIndex]);
+    }
+    public void InfoActivator()
+    {
+
     }
 }
