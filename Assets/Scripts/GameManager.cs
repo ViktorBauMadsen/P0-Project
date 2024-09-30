@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     public GameObject Info1;
     public GameObject Info2;
     public GameObject Info3;
+    public GameObject button1;
+    public GameObject button2;
     // Hardcoded variables you may want to tune.
     private float startingTime = 30f;
 
@@ -26,6 +28,16 @@ public class GameManager : MonoBehaviour
     private int score;
     private bool playing = false;
 
+
+    public void Awake()
+    {
+        Info1.SetActive(false);
+        Info2.SetActive(false);
+        Info3.SetActive(false);
+        button1.SetActive(false);
+        button2.SetActive(false);
+
+    }
     // This is public so the play button can see it.
     public void StartGame()
     {
@@ -35,9 +47,11 @@ public class GameManager : MonoBehaviour
         bombText.SetActive(false);
         gameUI.SetActive(true);
         background.SetActive(false);
-        Info1.SetActive(false);
-        Info2.SetActive(false);
-        Info3.SetActive(false);
+        Info1.SetActive(true);
+        button1.SetActive(true);
+        button2.SetActive(true);
+      /*  Info2.SetActive(false);
+        Info3.SetActive(false);*/
         // Hide all the visible moles.
         for (int i = 0; i < moles.Count; i++)
         {
@@ -123,8 +137,17 @@ public class GameManager : MonoBehaviour
         // Remove from active moles.
         currentMoles.Remove(moles[moleIndex]);
     }
-    public void InfoActivator()
+    public void InfoActivator1()
     {
-
+        Info1.SetActive(false);
+        Info2.SetActive(true);
+        Info3.SetActive(false);
+        
+    }
+    public void InforActivator2()
+    {
+        Info2.SetActive(false);
+        Info3.SetActive(true);
+        
     }
 }
