@@ -232,7 +232,7 @@ public class Mole : MonoBehaviour
         // Increase the amounts of HardHats until 100% at level 40.
         hardRate = Mathf.Min(level * 0.025f, 1f);
 
-        personRate = Mathf.Min(level * 0.025f, 0.75f);
+        personRate = Mathf.Min(level * 0.25f, 0.75f);
         // Duration bounds get quicker as we progress. No cap on insanity.
         float durationMin = Mathf.Clamp(1 - level * 0.1f, 0.01f, 1f);
         float durationMax = Mathf.Clamp(2 - level * 0.1f, 0.01f, 2f);
